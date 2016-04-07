@@ -12,7 +12,13 @@ $(document).ready(function() {
     weekdaysFull: ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'],
     weekdaysShort: ['კვ', 'ორ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ'],
     weekdaysLetter: ['კ', 'ო', 'ს', 'ო', 'ხ', 'პ', 'შ'],
-    firstDay: 1
+    firstDay: 1,
+    closeOnSelect: true,
+    today: 'დღეს',
+    clear: '',
+    close: 'დახურვა',
+    max: new Date(),
+    format: 'yyyy-mm-dd'
   });
 
   $.get("skills", function(data) {
@@ -77,6 +83,7 @@ app.controller('addForm', ['$scope', function($scope) {
         $rootScope.requestInProgress = false;
       }
     });
+    $scope.user = {}
   };
 
   $scope.cancel = function() {

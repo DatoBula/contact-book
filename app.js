@@ -5,7 +5,6 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient
 var db;
 var url = 'mongodb://localhost:27017/site';
-// Initialize connection once
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -13,12 +12,8 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/list', function(req, res) {
-  console.log('request')
   db.collection('documents', function(err, collection) {
     collection.find({}).toArray(function(err, docs) {
-      console.log(err)
-      console.log("Found the following records");
-      console.log(docs);
       res.send(JSON.stringify(docs));
     });
   });
@@ -29,7 +24,8 @@ app.get('/skills', function(req, res) {
 });
 
 app.post('/add', function(req, res) {
-  console.log(rep.body);
+  console.log(req.body);
+  res.send()
 });
 
 MongoClient.connect(url, function(err, database) {
