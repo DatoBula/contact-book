@@ -4,7 +4,7 @@ var app = express();
 
 var MongoClient = require('mongodb').MongoClient;
 var db;
-var url = 'mongodb://root:qazxdr54321@ds013270.mlab.com:13270/contack_book';
+var url = 'mongodb://admin:qazxdr54321@ds013270.mlab.com:13320/contact_book';
 
 app.use(express.static('public'));
 
