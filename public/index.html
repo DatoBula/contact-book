@@ -2,142 +2,146 @@
 <html>
 
 <head>
-  <!--Import Google Icon Font-->
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
 
-  <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/angular.min.js"></script>
-  <script type="text/javascript" src="js/site.js"></script>
-  <style>
-    body {
-      background-color: #f9f9f9;
-    }
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/site.js"></script>
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
 
-    .btn {
-      margin-right: 20px;
-    }
-  </style>
+        .btn {
+            margin-right: 20px;
+        }
+    </style>
 </head>
 
 <body ng-app="site">
-  <div class="section no-pad-bot" id="index-banner">
+<div class="section no-pad-bot" id="index-banner">
     <div class="container">
-      <nav>
-        <div class="nav-wrapper">
-          <form>
-            <div class="input-field">
-              <input class="card-panel teal lighten-2" id="search" type="search" required placeholder="ძებნა...">
+        <nav>
+            <div class="nav-wrapper">
+                <form>
+                    <div class="input-field">
+                        <input class="card-panel teal lighten-2" id="search" type="search" required
+                               placeholder="ძებნა...">
+                    </div>
+                </form>
             </div>
-          </form>
+        </nav>
+        <div ng-controller="controller">
+            <ul class="collapsible popout">
+                <li class="collection-item" ng-repeat="person in persons">
+                    <div class="collapsible-header">
+                        <i class="material-icons">perm_identity</i>{{person.name + ' ' + person.lastname}}
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="container">
+                            <div class="card">
+                                <div class="card-content row">
+                                    <div class="s2 col">
+                                        <img width="80px" ng-src="{{person.img || 'img/user.png'}}"
+                                             class="align-right circle">
+                                    </div>
+                                    <div class="s10 col">
+                                        <h4>{{person.name + ' ' + person.lastname}}</h4>
+                                        <label>დაბადიბის თარიღი</label> {{person.birthDate || '---'}}
+                                        <br>
+                                        <label>მეილი</label> {{person.email|| '---'}}
+                                        <br>
+                                        <label>ტელეფონი</label> {{person.phone|| '---'}}
+                                        <br>
+                                        <label>განათლება</label> {{person.school || '---'}}
+                                        <br>
+                                        <label>უნარები</label> {{person.skills}}
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </nav>
-      <div ng-controller="controller">
-        <ul class="collapsible popout">
-          <li class="collection-item" ng-repeat="person in persons">
-            <div class="collapsible-header">
-              <i class="material-icons">perm_identity</i>{{person.name + ' ' + person.lastname}}
-            </div>
-            <div class="collapsible-body">
-              <div class="container">
-                <div class="card">
-                  <div class="card-content row">
-                    <div class="s2 col">
-                      <img width="80px" ng-src="{{person.img || 'img/user.png'}}" class="align-right circle">
-                    </div>
-                    <div class="s10 col">
-                      <h4>{{person.name + ' ' + person.lastname}}</h4>
-                      <label>დაბადიბის თარიღი</label> {{person.birthDate || '---'}}
-                      <br>
-                      <label>მეილი</label> {{person.email|| '---'}}
-                      <br>
-                      <label>ტელეფონი</label> {{person.phone|| '---'}}
-                      <br>
-                      <label>განათლება</label> {{person.school || '---'}}
-                      <br>
-                      <label>უნარები</label> {{person.skills}}
-                      <br>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
     </div>
     <div id="modal" class="modal modal-fixed-footer" ng-controller="addForm">
-      <div class="modal-content">
-        <div class="row">
-          <form ng-submit="submit()" class="col s12">
+        <div class="modal-content">
             <div class="row">
-              <div class="input-field col s6">
-                <input id="first_name" ng-model="user.name" type="text" class="validate">
-                <label for="first_name">სახელი</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="last_name" ng-model="user.last_name" type="text" class="validate">
-                <label for="last_name">გვარი</label>
-              </div>
+                <form ng-submit="submit()" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="first_name" ng-model="user.name" type="text" class="validate">
+                            <label for="first_name">სახელი</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="last_name" ng-model="user.last_name" type="text" class="validate">
+                            <label for="last_name">გვარი</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="email" ng-model="user.email" type="email" class="validate">
+                            <label for="email">მეილი</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="phone" ng-model="user.phone" type="tel" class="validate">
+                            <label for="phone">ტელეფონი</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="birthday" ng-model="user.birthday" type="date" class="datepicker">
+                            <label for="birthday">დაბადების დღე</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="file-field input-field col s12">
+                            <div class="btn">
+                                <span>სურათი</span>
+                                <input type="file" file-model="user.file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select multiple ng-model="user.skills" id="skills">
+                                <option value="" disabled selected>აირჩიეთ უნარები</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="row">
-              <div class="input-field col s6">
-                <input id="email" ng-model="user.email" type="email" class="validate">
-                <label for="email">მეილი</label>
-              </div>
-              <div class="input-field col s6">
-                <input id="phone" ng-model="user.phone" type="tel" class="validate">
-                <label for="phone">ტელეფონი</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="birthday" ng-model="user.birthday" type="date" class="datepicker">
-                <label for="birthday">დაბადების დღე</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="file-field input-field col s12">
-                <div class="btn">
-                  <span>სურათი</span>
-                  <input type="file" file-model="user.file">
-                </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <select multiple ng-model="user.skills" id="skills">
-                  <option value="" disabled selected>აირჩიეთ უნარები</option>
-                </select>
-              </div>
-            </div>
-          </form>
         </div>
-      </div>
-      <div class="modal-footer row">
-        <div class="col s2 offset-s8">
-          <button ng-click="submit()" class="modal-action modal-close btn waves-effect waves-light">დამატება</button>
+        <div class="modal-footer row">
+            <div class="col s2 offset-s8">
+                <button ng-click="submit()" class="modal-action modal-close btn waves-effect waves-light">დამატება
+                </button>
+            </div>
+            <div class="col s2">
+                <button ng-click="cancel()" class="modal-action modal-close btn waves-effect waves-light">გაუქმება
+                </button>
+            </div>
         </div>
-        <div class="col s2">
-          <button ng-click="cancel()" class="modal-action modal-close btn waves-effect waves-light">გაუქმება</button>
-        </div>
-      </div>
     </div>
     <div>
-      <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
-        <a class="modal-trigger btn-floating btn-large" href="#modal">
-          <i class="large material-icons">add</i>
-        </a>
-      </div>
+        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+            <a class="modal-trigger btn-floating btn-large" href="#modal">
+                <i class="large material-icons">add</i>
+            </a>
+        </div>
     </div>
-  </div>
+</div>
 </body>
 
 </html>

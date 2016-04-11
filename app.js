@@ -1,5 +1,5 @@
 var express = require('express');
-var bodyParser = require('body-parser');
+var multiparty = require('multiparty');
 var app = express();
 
 var MongoClient = require('mongodb').MongoClient
@@ -7,9 +7,6 @@ var db;
 var url = 'mongodb://localhost:27017/site';
 
 app.use(express.static('public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/list', function(req, res) {
   db.collection('documents', function(err, collection) {
@@ -24,8 +21,13 @@ app.get('/skills', function(req, res) {
 });
 
 app.post('/add', function(req, res) {
-  console.log(req.body);
-  res.send()
+  var form = new multiparty.Form();
+  form.parse(req, function(err, fields, files) {
+    console.log(fields);
+    console.log(files);
+
+    res.end();
+  });
 });
 
 MongoClient.connect(url, function(err, database) {

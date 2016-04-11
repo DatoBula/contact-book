@@ -29,7 +29,7 @@ $(document).ready(function() {
       option.innerHTML = options[i]
       skills.append(option)
     }
-    $('#skills').material_select();
+    skills.material_select();
   });
 });
 
@@ -75,12 +75,10 @@ app.controller('addForm', ['$scope', function($scope) {
       processData: false,
       type: 'POST',
       success: function(response) {
-        deferred.resolve(response);
-        $rootScope.requestInProgress = false;
+        console.log(response)
       },
       error: function(error) {
-        deferred.reject(error);
-        $rootScope.requestInProgress = false;
+        console.log(error)
       }
     });
     $scope.user = {}
