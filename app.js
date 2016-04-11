@@ -5,6 +5,7 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var db;
 var url = 'mongodb://admin:qazxdr54321@ds013270.mlab.com:13320/contact_book';
+const port=process.env.PORT || 3000;
 
 app.use(express.static('public'));
 
@@ -36,7 +37,7 @@ MongoClient.connect(url, function (err, database) {
     db = database;
 
     // Start the application after the database connection is ready
-    app.listen(3030, function () {
+    app.listen(port, function () {
         console.log('Example app listening on port 3030!');
     });
 });
