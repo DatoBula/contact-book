@@ -22,11 +22,11 @@ $(document).ready(function() {
   });
 
   $.get("skills", function(data) {
-    var options = JSON.parse(data)
+    var options = JSON.parse(data);
     var skills = $('#skills');
     for (var i in options) {
       var option = document.createElement("option");
-      option.innerHTML = options[i]
+      option.innerHTML = options[i];
       skills.append(option)
     }
     skills.material_select();
