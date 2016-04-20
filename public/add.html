@@ -12,68 +12,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/add.js"></script>
 </head>
 <body>
-<div id="modal" class="modal modal-fixed-footer" ng-controller="addForm">
-    <div class="modal-content">
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <div>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="first_name" type="text" class="validate">
+                            <label for="first_name">სახელი</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">გვარი</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="email" type="email" class="validate">
+                            <label for="email">მეილი</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="phone" type="tel" class="validate">
+                            <label for="phone">ტელეფონი</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="birthday" type="date" class="datepicker">
+                            <label for="birthday">დაბადების დღე</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="address" type="text" class="validate">
+                            <label for="address">მისამართი</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="education" type="text" class="validate">
+                            <label for="education">განათლება</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="confessor" type="text" class="validate">
+                            <label for="confessor">მოძღვარი</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="file-field input-field col s12">
+                            <div class="btn">
+                                <span>სურათი</span>
+                                <input id="file" type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select multiple id="skills">
+                                <option value="" disabled selected>აირჩიეთ უნარები</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea" class="materialize-textarea" length="120"></textarea>
+                            <label for="textarea">დამატებითი ინფორმაცია</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row">
-            <form ng-submit="submit()" class="col s12">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="first_name" ng-model="user.name" type="text" class="validate">
-                        <label for="first_name">სახელი</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="last_name" ng-model="user.last_name" type="text" class="validate">
-                        <label for="last_name">გვარი</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="email" ng-model="user.email" type="email" class="validate">
-                        <label for="email">მეილი</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="phone" ng-model="user.phone" type="tel" class="validate">
-                        <label for="phone">ტელეფონი</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="birthday" ng-model="user.birthday" type="date" class="datepicker">
-                        <label for="birthday">დაბადების დღე</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="file-field input-field col s12">
-                        <div class="btn">
-                            <span>სურათი</span>
-                            <input type="file" file-model="user.file">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select multiple ng-model="user.skills" id="skills">
-                            <option value="" disabled selected>აირჩიეთ უნარები</option>
-                        </select>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="modal-footer row">
-        <div class="col s2 offset-s8">
-            <button ng-click="submit()" class="modal-action modal-close btn waves-effect waves-light">დამატება
-            </button>
-        </div>
-        <div class="col s2">
-            <button ng-click="cancel()" class="modal-action modal-close btn waves-effect waves-light">გაუქმება
-            </button>
+            <div onclick="submit()" class="col s2 offset-s8">
+                <a class="waves-effect waves-light btn">დამატება</a>
+            </div>
+            <div class="col s2">
+                <a class="waves-effect waves-light btn" href="index.html">გაუქმება</a>
+            </div>
         </div>
     </div>
 </div>

@@ -29,12 +29,54 @@ $(document).ready(function () {
     });
 });
 
-var app = angular.module("site", []);
-app.controller('controller', function ($scope, $http) {
-    $http.get("list").then(function (response) {
-        $scope.persons = response.data;
-        setTimeout(function () {
-            $('.collapsible').collapsible({});
-        }, 500);
+function submit() {
+    var ids = ['first_name', 'last_name', 'email', 'phone', 'birthday', 'address', 'education',
+        'confessor', 'textarea'];
+    var fd = new FormData();
+    for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]).value;
+        console.log(el);
+        if (el) {
+            fd.append(ids[i], el);
+        }
+    }
+    var files = document.getElementById('file').files;
+    if (files.length > 0) {
+        var file = files[0];
+        fd.append('image', file);
+    }
+
+    var selected = document.getElementById('skills');
+    var skills = getSelectValues(selected);
+    fd.append('skills', skills);
+
+    $.ajax({
+        url: 'add',
+        data: fd,
+        cache: false,
+        processData: false,
+        contentType:"multipart/form-data; charset:UTF-8",
+        type: 'POST',
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (error) {
+            console.log(error)
+        }
     });
-});
+}
+
+function getSelectValues(select) {
+    var result = [];
+    var options = select && select.options;
+    var opt;
+
+    for (var i = 1, iLen = options.length; i < iLen; i++) {
+        opt = options[i];
+
+        if (opt.selected) {
+            result.push(opt.value || opt.text);
+        }
+    }
+    return result;
+}

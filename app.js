@@ -22,7 +22,7 @@ app.get('/skills', function (req, res) {
 });
 
 app.post('/add', function (req, res) {
-    var form = new multiparty.Form();
+    var form = new multiparty.Form({encoding : 'utf8'});
     form.parse(req, function (err, fields, files) {
         console.log(fields);
         console.log(files);
@@ -38,6 +38,6 @@ MongoClient.connect(url, function (err, database) {
 
     // Start the application after the database connection is ready
     app.listen(port, function () {
-        console.log('Example app listening on port 3030!');
+        console.log('Example app listening on port 3000!');
     });
 });
