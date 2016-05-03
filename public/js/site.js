@@ -17,8 +17,7 @@ $(document).ready(function () {
         format: 'yyyy-mm-dd'
     });
 
-    $.get("skills", function (data) {
-        var options = JSON.parse(data);
+    $.get("skills", function (options) {
         var skills = $('#skills');
         for (var i in options) {
             var option = document.createElement("option");

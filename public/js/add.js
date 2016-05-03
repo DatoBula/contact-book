@@ -49,13 +49,17 @@ function submit() {
     var selected = document.getElementById('skills');
     var skills = getSelectValues(selected);
     fd.append('skills', skills);
+    // var oReq = new XMLHttpRequest();
+    // oReq.open("POST", "add", true);
+    // oReq.send(fd);
+
 
     $.ajax({
         url: 'add',
         data: fd,
         cache: false,
+        contentType: false,
         processData: false,
-        contentType:"multipart/form-data; charset:UTF-8",
         type: 'POST',
         success: function (response) {
             console.log(response)

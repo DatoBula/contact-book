@@ -13,7 +13,7 @@ app.use(express.static('public'));
 
 app.get('/list', function (req, res) {
     db.collection('documents', function (err, collection) {
-        collection.find({}).toArray(function (err, docs) {
+        collection.find({_id: {$ne: '__skills'}}).toArray(function (err, docs) {
             res.send(docs);
         });
     });
@@ -21,7 +21,7 @@ app.get('/list', function (req, res) {
 
 app.get('/skills', function (req, res) {
     db.collection('documents').find({_id: '__skills'}).limit(1).next(function (err, doc) {
-        if (err) return res.send(500, {err: err})
+        if (err) return res.send(500, {err: err});
         res.send(doc.skills);
     })
 });
@@ -29,7 +29,20 @@ app.get('/skills', function (req, res) {
 app.post('/add', function (req, res) {
     var form = new multiparty.Form({encoding: 'utf8'});
     form.parse(req, function (err, fields, files) {
-        console.log(fields);
+        var ids = ['first_name', 'last_name', 'email', 'phone', 'birthday', 'address', 'education',
+            'confessor', 'textarea'];
+        var user = {};
+        for (var i in ids) {
+            var field = fields[ids[i]];
+            if (field) {
+                user[ids[i]] = field[0];
+            }
+        }
+        if (fields.skills && fields.skills[0]) {
+            user.skills = fields.skills[0].split(',');
+        }
+
+        console.log(user);
         console.log(files);
 
         res.end();

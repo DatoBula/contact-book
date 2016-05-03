@@ -17,6 +17,7 @@
         body {
             background-color: #f9f9f9;
         }
+        nav .nav-wrapper form, nav .nav-wrapper form .input-field{ height: 100%; }
     </style>
 </head>
 
@@ -37,7 +38,7 @@
             <ul class="collapsible popout">
                 <li class="collection-item" ng-repeat="person in persons">
                     <div class="collapsible-header">
-                        <i class="material-icons">perm_identity</i>{{person.name + ' ' + person.lastname}}
+                        <i class="material-icons">perm_identity</i>{{person.first_name + ' ' + person.last_name}}
                     </div>
                     <div class="collapsible-body">
                         <div class="container">
@@ -48,7 +49,7 @@
                                              class="align-right circle">
                                     </div>
                                     <div class="s10 col">
-                                        <h4>{{person.name + ' ' + person.lastname}}</h4>
+                                        <h4>{{person.first_name + ' ' + person.last_name}}</h4>
                                         <label>დაბადიბის თარიღი</label> {{person.birthDate || '---'}}
                                         <br>
                                         <label>მეილი</label> {{person.email|| '---'}}
