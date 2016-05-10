@@ -30,12 +30,26 @@ $(document).ready(function () {
 });
 
 function submit() {
+    var required = {'first_name': {
+        message: 'სახელი აუცილებელი ველია'
+    }, 'last_name': {
+        message: 'გვარი აუცილებელი ველია'
+    }, 'email': {
+        message: 'მეილი აუცილებელი ველია'
+    }, 'phone': {
+        message: 'ტელეფონის ნომერი აუცილებელი ველია'
+    }, 'birthday': {
+        message: 'დაბადების დღე აუცილებელი ველია'
+    }};
     var ids = ['first_name', 'last_name', 'email', 'phone', 'birthday', 'address', 'education',
         'confessor', 'textarea'];
     var fd = new FormData();
     for (var i = 0; i < ids.length; i++) {
         var el = document.getElementById(ids[i]).value;
-        console.log(el);
+        if (!el && required[ids[i]]) {
+            Materialize.toast(required[ids[i]].message, 4000)
+            return
+        }
         if (el) {
             fd.append(ids[i], el);
         }
@@ -61,11 +75,12 @@ function submit() {
         contentType: false,
         processData: false,
         type: 'POST',
-        success: function (response) {
-            console.log(response)
+        success: function () {
+            location.replace('/')
         },
         error: function (error) {
-            console.log(error)
+            console.log(error);
+            alert("დაფიქსირდა შეცდომა")
         }
     });
 }

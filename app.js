@@ -1,5 +1,6 @@
 var express = require('express');
 var multiparty = require('multiparty');
+var fs = require('fs');
 var app = express();
 
 var mongodb = require('mongodb');
@@ -26,6 +27,13 @@ app.get('/skills', function (req, res) {
     })
 });
 
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
 app.post('/add', function (req, res) {
     var form = new multiparty.Form({encoding: 'utf8'});
     form.parse(req, function (err, fields, files) {
@@ -42,10 +50,15 @@ app.post('/add', function (req, res) {
             user.skills = fields.skills[0].split(',');
         }
 
-        console.log(user);
-        console.log(files);
+        if (files.image){
+            var file = files.image[0];
+            user.image = base64_encode(file.path)
+        }
+        db.collection('documents').insertOne(user, function (err) {
+            if (err) return res.send(500);
 
-        res.end();
+            res.send();
+        });
     });
 });
 
