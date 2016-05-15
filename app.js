@@ -75,10 +75,22 @@ app.post('/delete', function (req, res) {
 app.post('/favorite', function (req, res) {
     var id = req.body.id;
     var favorite = req.body.favorite;
-    db.collection('documents').updateOne({_id: new mongodb.ObjectID(id)}, {$set : {favorite: favorite}}, function (err) {
+    db.collection('documents').updateOne({_id: new mongodb.ObjectID(id)}, {$set: {favorite: favorite}}, function (err) {
         if (err) return res.sendStatus(500);
         res.send();
     })
+});
+
+app.post('/addSkill', function (req, res) {
+    var skill = req.body.skill;
+    db.collection('documents').updateOne(
+        {_id: '__skills'},
+        {$addToSet: {skills: skill}},
+        function (err) {
+            if (err) return res.sendStatus(500);
+            res.send();
+        }
+    );
 });
 
 MongoClient.connect(url, function (err, database) {

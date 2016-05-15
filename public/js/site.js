@@ -17,18 +17,12 @@ $(document).ready(function () {
         format: 'yyyy-mm-dd'
     });
 
-    $.get("skills", function (options) {
-        var skills = $('#skills');
-        for (var i in options) {
-            var option = document.createElement("option");
-            option.innerHTML = options[i];
-            skills.append(option)
-        }
-        skills.material_select();
-    });
-
     setTimeout(function () {
         $('.collapsible').collapsible({});
+
+        $('.modal-trigger').leanModal({
+            dismissible: false
+        });
     }, 500);
 });
 
@@ -52,6 +46,19 @@ app.controller('controller', function ($scope, $http) {
 
     $scope.editPerson = function (person) {
 
+    };
+
+    $scope.addSkill = function () {
+        var skill = $scope.skill;
+        if (!skill || skill === '') {
+            Materialize.toast('სახელი არ შეიძლება იყოს ცარიელი!', 4000)
+        } else {
+            $http.post('addSkill', {skill: skill}).then(function (response) {
+                $('#addSkillModal').closeModal();
+            }, function (response) {
+                Materialize.toast('ფავორიტებში დამატებისას / წაშლისას მოხდა შეცდომა!', 4000)
+            });
+        }
     };
 
     $scope.toggleFavorite = function (person) {

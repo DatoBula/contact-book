@@ -34,7 +34,7 @@
 </head>
 
 <body ng-app="site">
-<div class="section no-pad-bot" id="index-banner">
+<div ng-controller="controller" class="section no-pad-bot" id="index-banner">
     <div class="container">
         <nav>
             <div class="nav-wrapper">
@@ -46,7 +46,7 @@
                 </form>
             </div>
         </nav>
-        <div ng-controller="controller">
+        <div>
             <ul id="persons" class="collapsible" data-collapsible="expandable">
                 <li class="collection-item" ng-repeat="person in persons">
                     <div id="name" class="collapsible-header">
@@ -96,11 +96,30 @@
         </div>
     </div>
 
+    <div id="addSkillModal" class="modal">
+        <div class="modal-content">
+            <h4>ახალი უნარი</h4>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input ng-model="skill" id="skill" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a ng-click="addSkill()" class="modal-action waves-effect waves-green btn-flat">დამატება</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat">დახურვა</a>
+        </div>
+    </div>
+
     <div>
-        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large" href="add.html">
+        <div class="fixed-action-btn vertical click-to-toggle" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large">
                 <i class="large material-icons">add</i>
             </a>
+            <ul>
+                <li><a class="btn-floating tooltipped" data-position="left" data-delay="50" data-tooltip="პიროვნების დამატება" href="add.html"><i class="material-icons">perm_identity</i></a></li>
+                <li><a class="btn-floating tooltipped modal-trigger" href="#addSkillModal" data-position="left" data-delay="50" data-tooltip="უანრის დამატება"><i class="material-icons">toc</i></a></li>
+            </ul>
         </div>
     </div>
 </div>
