@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser')
 var multiparty = require('multiparty');
 var fs = require('fs');
 var app = express();
@@ -6,11 +7,12 @@ var app = express();
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var db;
-var url = 'mongodb://admin:qazxdr54321@ds013270.mlab.com:13320/contact_book';
+var url = 'mongodb://localhost:27017/site';
 const port = process.env.PORT || 3000;
 var defaultSkills = ['სამშენებლო სამუშაოები', 'მანქანით მომსახურება', 'სამეურნეო საქმე', 'შეშა'];
 
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 app.get('/list', function (req, res) {
     db.collection('documents', function (err, collection) {
@@ -50,7 +52,7 @@ app.post('/add', function (req, res) {
             user.skills = fields.skills[0].split(',');
         }
 
-        if (files.image){
+        if (files.image) {
             var file = files.image[0];
             user.image = base64_encode(file.path)
         }
@@ -60,6 +62,23 @@ app.post('/add', function (req, res) {
             res.send();
         });
     });
+});
+
+app.post('/delete', function (req, res) {
+    var id = req.body.id;
+    db.collection('documents').deleteOne({_id: new mongodb.ObjectID(id)}, function (err) {
+        if (err) return res.sendStatus(500);
+        res.send();
+    })
+});
+
+app.post('/favorite', function (req, res) {
+    var id = req.body.id;
+    var favorite = req.body.favorite;
+    db.collection('documents').updateOne({_id: new mongodb.ObjectID(id)}, {$set : {favorite: favorite}}, function (err) {
+        if (err) return res.sendStatus(500);
+        res.send();
+    })
 });
 
 MongoClient.connect(url, function (err, database) {

@@ -51,40 +51,42 @@
                 <li class="collection-item" ng-repeat="person in persons">
                     <div id="name" class="collapsible-header">
                         <i class="material-icons">perm_identity</i>{{person.first_name + " " + person.last_name}}
-                        <a href="#!" class="secondary-content">
-                            <i class="material-icons" ng-class="{true: 'icon-yellow'}[person.favorite]">grade</i>
+                        <a class="secondary-content">
+                            <i class="material-icons" ng-click="toggleFavorite(person)"
+                               ng-class="{true: 'icon-yellow'}[person.favorite]">grade</i>
                             <i class="material-icons">mode_edit</i>
-                            <i class="material-icons">delete</i>
+                            <i class="material-icons" ng-click="deletePerson(person)">delete</i>
                         </a>
                     </div>
                     <div class="collapsible-body">
                         <div class="row">
                             <div id="image" class="s2 col">
                                 <img ng-src="{{person.image ? 'data:image/png;base64,' + person.image : 'img/user.png'}}"
-                                     width="80px" height="80px" class="align-right circle">
+                                     height="80px" class="align-right circle">
                             </div>
-                            <div id="info1" class="s4 col">
-                                <label>დაბადიბის თარიღი </label>{{person.birthday}}
+                            <div ng-show="!!person.birthday || !!person.email || !!person.phone" id="info1"
+                                 class="s4 col">
+                                <label ng-show="!!person.birthday">დაბადიბის თარიღი </label>{{person.birthday}}
                                 <br>
-                                <label>მეილი </label> {{person.email}}
+                                <label ng-show="!!person.email">მეილი </label> {{person.email}}
                                 <br>
-                                <label>ტელეფონი </label> {{person.phone}}
+                                <label ng-show="!!person.phone">ტელეფონი </label> {{person.phone}}
                                 <br>
                             </div>
-                            <div id="info2" class="s6 col">
-                                <label>განათლება </label>{{person.education}}
+                            <div ng-show="!!person.education || !!person.address || !!person.address" id="info2" class="s6 col">
+                                <label ng-show="!!person.education">განათლება </label>{{person.education}}
                                 <br>
-                                <label>მისამართი </label>{{person.address}}
+                                <label ng-show="!!person.address">მისამართი </label>{{person.address}}
                                 <br>
-                                <label>მოძღვარი </label>{{person.confessor}}
+                                <label ng-show="!!person.confessor">მოძღვარი </label>{{person.confessor}}
                                 <br>
                             </div>
                         </div>
                         <div id="info" class="row">
                             <div id="info3" class="s10 offset-s2 col">
-                                <label>facebook </label><a ng-href="{{person.facebook}}">{{person.facebook}}</a>
-                                <br>
-                                <label>დამატებითი ინფორმაცია </label>{{person.textarea}}<br>
+                                <label ng-show="!!person.facebook">facebook </label><a ng-href="{{person.facebook}}">{{person.facebook}}</a>
+                                <br ng-show="!!person.facebook">
+                                <label ng-show="!!person.textarea">დამატებითი ინფორმაცია </label>{{person.textarea}}<br ng-show="!!person.textarea">
                                 <label>უნარები </label><br>{{person.skills}}<br>
                             </div>
                         </div>

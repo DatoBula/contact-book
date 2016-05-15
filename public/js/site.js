@@ -40,4 +40,25 @@ app.controller('controller', function ($scope, $http) {
             $('.collapsible').collapsible({});
         }, 500);
     });
+
+    $scope.deletePerson = function (person) {
+        $http.post('delete', {id: person._id}).then(function (response) {
+            var index = $scope.persons.indexOf(person);
+            $scope.persons.splice(index, 1);
+        }, function (response) {
+            Materialize.toast('წაშლისას დაფიქსირდა შეცდომა!', 4000)
+        });
+    };
+
+    $scope.editPerson = function (person) {
+
+    };
+
+    $scope.toggleFavorite = function (person) {
+        $http.post('favorite', {id: person._id, favorite: !person.favorite}).then(function (response) {
+            person.favorite = !person.favorite;
+        }, function (response) {
+            Materialize.toast('ფავორიტებში დამატებისას / წაშლისას მოხდა შეცდომა!', 4000)
+        });
+    };
 });

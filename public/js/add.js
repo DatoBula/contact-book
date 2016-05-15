@@ -47,7 +47,7 @@ function submit() {
     for (var i = 0; i < ids.length; i++) {
         var el = document.getElementById(ids[i]).value;
         if (!el && required[ids[i]]) {
-            Materialize.toast(required[ids[i]].message, 4000)
+            Materialize.toast(required[ids[i]].message, 4000);
             return
         }
         if (el) {
