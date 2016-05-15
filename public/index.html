@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/site.js"></script>
     <style>
         body {
@@ -25,13 +26,14 @@
             margin-left: 15px;
             margin-top: 15px;
         }
+
         i.icon-yellow {
             color: #ffd600;
         }
     </style>
 </head>
 
-<body>
+<body ng-app="site">
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <nav>
@@ -44,8 +46,50 @@
                 </form>
             </div>
         </nav>
-        <div>
+        <div ng-controller="controller">
             <ul id="persons" class="collapsible" data-collapsible="expandable">
+                <li class="collection-item" ng-repeat="person in persons">
+                    <div id="name" class="collapsible-header">
+                        <i class="material-icons">perm_identity</i>{{person.first_name + " " + person.last_name}}
+                        <a href="#!" class="secondary-content">
+                            <i class="material-icons" ng-class="{true: 'icon-yellow'}[person.favorite]">grade</i>
+                            <i class="material-icons">mode_edit</i>
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div id="image" class="s2 col">
+                                <img ng-src="{{person.image ? 'data:image/png;base64,' + person.image : 'img/user.png'}}"
+                                     width="80px" height="80px" class="align-right circle">
+                            </div>
+                            <div id="info1" class="s4 col">
+                                <label>დაბადიბის თარიღი </label>{{person.birthday}}
+                                <br>
+                                <label>მეილი </label> {{person.email}}
+                                <br>
+                                <label>ტელეფონი </label> {{person.phone}}
+                                <br>
+                            </div>
+                            <div id="info2" class="s6 col">
+                                <label>განათლება </label>{{person.education}}
+                                <br>
+                                <label>მისამართი </label>{{person.address}}
+                                <br>
+                                <label>მოძღვარი </label>{{person.confessor}}
+                                <br>
+                            </div>
+                        </div>
+                        <div id="info" class="row">
+                            <div id="info3" class="s10 offset-s2 col">
+                                <label>facebook </label><a ng-href="{{person.facebook}}">{{person.facebook}}</a>
+                                <br>
+                                <label>დამატებითი ინფორმაცია </label>{{person.textarea}}<br>
+                                <label>უნარები </label><br>{{person.skills}}<br>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
