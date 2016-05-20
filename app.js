@@ -7,7 +7,7 @@ var app = express();
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var db;
-var url = 'mongodb://admin:qazxdr54321@ds013270.mlab.com:13320/contact_book';
+var url = 'mongodb://localhost/site';
 const port = process.env.PORT || 3000;
 var defaultSkills = ['სამშენებლო სამუშაოები', 'მანქანით მომსახურება', 'სამეურნეო საქმე', 'შეშა'];
 
