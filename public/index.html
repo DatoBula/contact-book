@@ -66,7 +66,7 @@
                             </div>
                             <div ng-show="!!person.birthday || !!person.email || !!person.phone" id="info1"
                                  class="s4 col">
-                                <label ng-show="!!person.birthday">დაბადიბის თარიღი </label>{{person.birthday}}
+                                <label ng-show="!!person.birthday">დაბადიბის თარიღი </label>{{person.birthday | date : 'yyyy-MM-dd'}}
                                 <br>
                                 <label ng-show="!!person.email">მეილი </label> {{person.email}}
                                 <br>

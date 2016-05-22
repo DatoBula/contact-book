@@ -1,5 +1,5 @@
 var app = angular.module("site", []);
-app.controller('controller', function ($scope, $http, $filter) {
+app.controller('controller', function ($scope, $http) {
 
     var person = JSON.parse(localStorage.getItem("person"));
     localStorage.removeItem("person");
@@ -23,72 +23,114 @@ app.controller('controller', function ($scope, $http, $filter) {
             format: 'yyyy-mm-dd'
         });
 
-        $http.get("skills").then(function (response) {
-            var options = response.data;
-            var skills = $('#skills');
-            for (var i in options) {
-                var option = document.createElement("option");
-                if ($scope.person.skills && ~$scope.person.skills.indexOf(options[i])) {
-                    option.setAttribute("class", "active");
-                }
-                option.innerHTML = options[i];
-                skills.append(option)
-            }
-            skills.material_select();
-        });
     });
+
+    $http.get("skills").then(function (response) {
+        var options = response.data;
+        var skills = $('#skills');
+        for (var i in options) {
+            var option = document.createElement("option");
+            if ($scope.person.skills && ~$scope.person.skills.indexOf(options[i])) {
+                option.setAttribute("class", "active");
+            }
+            option.innerHTML = options[i];
+            skills.append(option)
+        }
+        skills.material_select();
+    });
+
+    $scope.submit = function () {
+        var required = {
+            'first_name': {
+                message: 'სახელი აუცილებელი ველია'
+            }, 'last_name': {
+                message: 'გვარი აუცილებელი ველია'
+            }
+        };
+
+        var fd = new FormData();
+        for (var i in $scope.person) {
+            fd.append(i, $scope.person[i]);
+        }
+        var files = document.getElementById('file').files;
+        if (files.length > 0) {
+            var file = files[0];
+            fd.append('image', file);
+        }
+
+        console.log($scope.person);
+        console.log(typeof $scope.person.birthday);
+
+        // $.ajax({
+        //     url: 'add',
+        //     data: fd,
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false,
+        //     type: 'POST',
+        //     success: function () {
+        //         location.replace('/')
+        //     },
+        //     error: function (error) {
+        //         alert("დაფიქსირდა შეცდომა")
+        //     }
+        // });
+    }
 });
 
-function submit() {
-    var required = {
-        'first_name': {
-            message: 'სახელი აუცილებელი ველია'
-        }, 'last_name': {
-            message: 'გვარი აუცილებელი ველია'
-        }
-    };
-    var ids = ['first_name', 'last_name', 'email', 'phone', 'birthday', 'address', 'education',
-        'confessor', 'textarea'];
-    var fd = new FormData();
-    for (var i = 0; i < ids.length; i++) {
-        var el = document.getElementById(ids[i]).value;
-        if (!el && required[ids[i]]) {
-            Materialize.toast(required[ids[i]].message, 4000);
-            return
-        }
-        if (el) {
-            fd.append(ids[i], el);
-        }
-    }
-    var files = document.getElementById('file').files;
-    if (files.length > 0) {
-        var file = files[0];
-        fd.append('image', file);
-    }
+/*
+ function submit() {
+ var required = {
+ 'first_name': {
+ message: 'სახელი აუცილებელი ველია'
+ }, 'last_name': {
+ message: 'გვარი აუცილებელი ველია'
+ }
+ };
 
-    var selected = document.getElementById('skills');
-    var skills = getSelectValues(selected);
-    fd.append('skills', skills);
-    // var oReq = new XMLHttpRequest();
-    // oReq.open("POST", "add", true);
-    // oReq.send(fd);
+ var ids = ['first_name', 'last_name', 'email', 'phone', 'birthday', 'address', 'education',
+ 'confessor', 'textarea'];
+ var fd = new FormData();
+ for (var i = 0; i < ids.length; i++) {
+ var el = document.getElementById(ids[i]).value;
+ if (!el && required[ids[i]]) {
+ Materialize.toast(required[ids[i]].message, 4000);
+ return
+ }
+ if (el) {
+ fd.append(ids[i], el);
+ }
+ }
+ var files = document.getElementById('file').files;
+ if (files.length > 0) {
+ var file = files[0];
+ fd.append('image', file);
+ }
+
+ var selected = document.getElementById('skills');
+ var skills = getSelectValues(selected);
+ fd.append('skills', skills);
+ // var oReq = new XMLHttpRequest();
+ // oReq.open("POST", "add", true);
+ // oReq.send(fd);
 
 
-    $.ajax({
-        url: 'add',
-        data: fd,
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        success: function () {
-            location.replace('/')
-        },
-        error: function (error) {
-            alert("დაფიქსირდა შეცდომა")
-        }
-    });
-}
+ $.ajax({
+ url: 'add',
+ data: fd,
+ cache: false,
+ contentType: false,
+ processData: false,
+ type: 'POST',
+ success: function () {
+ location.replace('/')
+ },
+ error: function (error) {
+ alert("დაფიქსირდა შეცდომა")
+ }
+ });
+ }
+ */
 
 function getSelectValues(select) {
     var result = [];

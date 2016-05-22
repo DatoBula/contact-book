@@ -76,7 +76,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <select multiple id="skills">
+                            <select multiple ng-model="person.skills" id="skills">
                                 <option value="" disabled selected>აირჩიეთ უნარები</option>
                             </select>
                         </div>
@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="row">
-            <div onclick="submit()" class="col s2 offset-s8">
+            <div ng-click="submit()" class="col s2 offset-s8">
                 <a class="waves-effect waves-light btn">დამატება</a>
             </div>
             <div class="col s2">
