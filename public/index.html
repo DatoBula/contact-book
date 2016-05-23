@@ -61,8 +61,8 @@
                     <div class="collapsible-body">
                         <div class="row">
                             <div id="image" class="s2 col">
-                                <img ng-src="{{person.image ? 'data:image/png;base64,' + person.image : 'img/user.png'}}"
-                                     height="80px" class="align-right circle">
+                                <img ng-src="{{person.image ? person.image : 'img/user.png'}}"
+                                     height="80px" class="align-right">
                             </div>
                             <div ng-show="!!person.birthday || !!person.email || !!person.phone" id="info1"
                                  class="s4 col">

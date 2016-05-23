@@ -22,6 +22,18 @@
             <div class="row">
                 <form id="addForm" class="col s12" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                     <div class="row">
+                        <div id="image" class="s2 col">
+                            <img id="picture" ng-src="{{person.image ? person.image : 'img/user.png'}}"
+                                 height="80px" class="align-right">
+                        </div>
+                        <div class="file-field input-field col s10">
+                            <div class="btn">
+                                <span>სურათი</span>
+                                <input id="file" type="file">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="input-field col s6">
                             <input id="first_name" type="text" ng-model="person.first_name" class="validate">
                             <label for="first_name">სახელი</label>
@@ -61,17 +73,6 @@
                         <div class="input-field col s12">
                             <input id="confessor" type="text" ng-model="person.confessor" class="validate">
                             <label for="confessor">მოძღვარი</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="file-field input-field col s12">
-                            <div class="btn">
-                                <span>სურათი</span>
-                                <input id="file" type="file">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
                         </div>
                     </div>
                     <div class="row">
