@@ -46,7 +46,7 @@ app.controller('controller', function ($scope, $http) {
 
     $scope.editPerson = function (person) {
         localStorage.setItem("person", JSON.stringify(person));
-        window.location = 'add.html';
+        window.location = 'person.html';
     };
 
     $scope.addSkill = function () {

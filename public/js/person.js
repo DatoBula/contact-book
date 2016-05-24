@@ -31,9 +31,19 @@ app.controller('controller', function ($scope, $http) {
         for (var i in options) {
             var option = document.createElement("option");
             option.innerHTML = options[i];
+            if ($scope.person.skills && $scope.person.skills.indexOf(options[i]) != -1) {
+                option.setAttribute('selected', true);
+            }
             skills.append(option)
         }
         skills.material_select();
+        var ul = skills.prev();
+        ul.children('li').toArray().forEach(function (li) {
+            if ($scope.person.skills && $scope.person.skills.indexOf($(li).children('span')[0].innerText) != -1) {
+                $(li).addClass('active selected');
+                $($(li).children('span')[0]).children()[0].checked = true;
+            }
+        });
     });
 
     $scope.submit = function () {
@@ -45,24 +55,11 @@ app.controller('controller', function ($scope, $http) {
             }
         };
 
-        var fd = new FormData();
-        for (var i in $scope.person) {
-            fd.append(i, $scope.person[i]);
-        }
-
-        $.ajax({
-            url: 'add',
-            data: fd,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            success: function () {
-                location.replace('/')
-            },
-            error: function (error) {
-                alert("დაფიქსირდა შეცდომა")
-            }
+        //console.log($scope.person)
+        $http.post('add', $scope.person).then(function (response) {
+            window.location = '/';
+        }, function (response) {
+            Materialize.toast('დამატებისას მოხდა შეცდომა', 4000)
         });
     };
 
@@ -82,6 +79,14 @@ app.controller('controller', function ($scope, $http) {
         })(f);
         reader.readAsDataURL(f);
     };
+
+    $scope.$watch('person.birthday', function () {
+        $scope.birthday = new Date($scope.person.birthday);
+    });
+
+    $scope.$watch('birthday', function (newVal) {
+        $scope.person.birthday = newVal.getTime();
+    });
 
     document.getElementById('file').addEventListener('change', $scope.uploadFile, false);
 
