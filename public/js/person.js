@@ -55,7 +55,6 @@ app.controller('controller', function ($scope, $http) {
             }
         };
 
-        //console.log($scope.person)
         $http.post('add', $scope.person).then(function (response) {
             window.location = '/';
         }, function (response) {

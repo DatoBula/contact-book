@@ -41,7 +41,7 @@
             <div class="nav-wrapper">
                 <form>
                     <div class="input-field">
-                        <input class="card-panel teal lighten-2" id="search" type="search" required
+                        <input ng-keyup="search()" class="card-panel teal lighten-2" id="search" type="search" required
                                placeholder="ძებნა...">
                     </div>
                 </form>
@@ -53,10 +53,10 @@
                     <div id="name" class="collapsible-header">
                         <i class="material-icons">perm_identity</i>{{person.first_name + " " + person.last_name}}
                         <a class="secondary-content">
-                            <i class="material-icons" ng-click="toggleFavorite(person)"
+                            <i class="material-icons" ng-click="toggleFavorite(person, $event)"
                                ng-class="{true: 'icon-yellow'}[person.favorite]">grade</i>
-                            <i class="material-icons" ng-click="editPerson(person)">mode_edit</i>
-                            <i class="material-icons" ng-click="deletePerson(person)">delete</i>
+                            <i class="material-icons" ng-click="editPerson(person, $event)">mode_edit</i>
+                            <i class="material-icons" ng-click="deletePerson(person, $event)">delete</i>
                         </a>
                     </div>
                     <div class="collapsible-body">
@@ -88,7 +88,7 @@
                                 <label ng-show="!!person.facebook">facebook </label><a ng-href="{{person.facebook}}">{{person.facebook}}</a>
                                 <br ng-show="!!person.facebook">
                                 <label ng-show="!!person.textarea">დამატებითი ინფორმაცია </label>{{person.textarea}}<br ng-show="!!person.textarea">
-                                <label>უნარები </label><br>{{person.skills}}<br>
+                                <label>უნარები </label><br>{{person.skills.join(', ')}}<br>
                             </div>
                         </div>
                     </div>

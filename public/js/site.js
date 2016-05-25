@@ -35,7 +35,8 @@ app.controller('controller', function ($scope, $http) {
         }, 500);
     });
 
-    $scope.deletePerson = function (person) {
+    $scope.deletePerson = function (person, $event) {
+        $event.stopPropagation();
         $http.post('delete', {id: person._id}).then(function (response) {
             var index = $scope.persons.indexOf(person);
             $scope.persons.splice(index, 1);
@@ -44,7 +45,8 @@ app.controller('controller', function ($scope, $http) {
         });
     };
 
-    $scope.editPerson = function (person) {
+    $scope.editPerson = function (person, $event) {
+        $event.stopPropagation();
         localStorage.setItem("person", JSON.stringify(person));
         window.location = 'person.html';
     };
@@ -62,11 +64,20 @@ app.controller('controller', function ($scope, $http) {
         }
     };
 
-    $scope.toggleFavorite = function (person) {
+    $scope.toggleFavorite = function (person, $event) {
+        $event.stopPropagation();
         $http.post('favorite', {id: person._id, favorite: !person.favorite}).then(function (response) {
             person.favorite = !person.favorite;
         }, function (response) {
             Materialize.toast('ფავორიტებში დამატებისას / წაშლისას მოხდა შეცდომა!', 4000)
         });
     };
+
+    $scope.search = function () {
+        $http.get('search?filter=' + $('#search').val()).then(function (response) {
+            $scope.persons = response.data;
+        }, function (response) {
+            Materialize.toast('მოხდა შეცდომა!', 4000)
+        })
+    }
 });
