@@ -9,7 +9,7 @@ var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var db;
 var collection;
-var url = 'mongodb://admin:qazxdr54321@ds013270.mlab.com:13320/contact_book';
+var url = 'mongodb://localhost/site';
 const port = process.env.PORT || 3000;
 var defaultSkills = ['სამშენებლო სამუშაოები', 'მანქანით მომსახურება', 'სამეურნეო საქმე', 'შეშა'];
 
@@ -17,7 +17,10 @@ app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
 
 app.get('/list', function (req, res) {
-    collection.find({_id: {$ne: '__skills'}}, {search: 0}).toArray(function (err, docs) {
+    collection.find({_id: {$ne: '__skills'}}, {search: 0}).sort({
+        first_name: 1,
+        last_name: 1
+    }).toArray(function (err, docs) {
         res.send(docs);
     });
 });

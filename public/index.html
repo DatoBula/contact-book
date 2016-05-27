@@ -2,13 +2,10 @@
 <html>
 
 <head>
-    <!--Import Google Icon Font-->
     <link href="css/icon.css" rel="stylesheet">
-    <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
     <link rel="icon" type="image/png" href="img/georgia.png">
 
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -31,6 +28,14 @@
         i.icon-yellow {
             color: #ffd600;
         }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .highlighted {
+            background: yellow
+        }
     </style>
 </head>
 
@@ -48,47 +53,63 @@
             </div>
         </nav>
         <div>
-            <ul id="persons" class="collapsible" data-collapsible="expandable">
+            <ul class="collapsible" data-collapsible="expandable">
                 <li class="collection-item" ng-repeat="person in persons">
-                    <div id="name" class="collapsible-header">
-                        <i class="material-icons">perm_identity</i>{{person.first_name + " " + person.last_name}}
+                    <div class="collapsible-header">
+                        <i class="material-icons">perm_identity</i>
+                        <span ng-bind-html="person.first_name + ' ' + person.last_name | highlight"></span>
                         <a class="secondary-content">
-                            <i class="material-icons" ng-click="toggleFavorite(person, $event)"
+                            <i class="material-icons clickable" ng-click="toggleFavorite(person, $event)"
                                ng-class="{true: 'icon-yellow'}[person.favorite]">grade</i>
-                            <i class="material-icons" ng-click="editPerson(person, $event)">mode_edit</i>
-                            <i class="material-icons" ng-click="deletePerson(person, $event)">delete</i>
+                            <i class="material-icons clickable"
+                               ng-click="editPerson(person, $event)">mode_edit</i>
+                            <i class="material-icons clickable"
+                               ng-click="deletePerson(person, $event)">delete</i>
                         </a>
                     </div>
                     <div class="collapsible-body">
                         <div class="row">
                             <div id="image" class="s2 col">
                                 <img ng-src="{{person.image ? person.image : 'img/user.png'}}"
-                                     height="80px" class="align-right">
+                                     height="100px" class="align-right">
                             </div>
-                            <div ng-show="!!person.birthday || !!person.email || !!person.phone" id="info1"
-                                 class="s4 col">
-                                <label ng-show="!!person.birthday">დაბადიბის თარიღი </label>{{person.birthday | date : 'yyyy-MM-dd'}}
-                                <br>
-                                <label ng-show="!!person.email">მეილი </label> {{person.email}}
-                                <br>
-                                <label ng-show="!!person.phone">ტელეფონი </label> {{person.phone}}
-                                <br>
-                            </div>
-                            <div ng-show="!!person.education || !!person.address || !!person.address" id="info2" class="s6 col">
-                                <label ng-show="!!person.education">განათლება </label>{{person.education}}
-                                <br>
-                                <label ng-show="!!person.address">მისამართი </label>{{person.address}}
-                                <br>
-                                <label ng-show="!!person.confessor">მოძღვარი </label>{{person.confessor}}
-                                <br>
-                            </div>
-                        </div>
-                        <div id="info" class="row">
-                            <div id="info3" class="s10 offset-s2 col">
-                                <label ng-show="!!person.facebook">facebook </label><a ng-href="{{person.facebook}}">{{person.facebook}}</a>
-                                <br ng-show="!!person.facebook">
-                                <label ng-show="!!person.textarea">დამატებითი ინფორმაცია </label>{{person.textarea}}<br ng-show="!!person.textarea">
-                                <label>უნარები </label><br>{{person.skills.join(', ')}}<br>
+                            <div class="s10 col">
+                                <div class="row">
+                                    <div class="s6 col" ng-show="!!person.birthday || !!person.email || !!person.phone">
+                                        <label ng-show="!!person.birthday">დაბადიბის თარიღი </label>
+                                        <span ng-bind-html="person.birthday | date : 'yyyy-MM-dd' | highlight"></span>
+                                        <br>
+                                        <label ng-show="!!person.email">მეილი </label>
+                                        <span ng-bind-html="person.email | highlight"></span>
+                                        <br>
+                                        <label ng-show="!!person.phone">ტელეფონი </label>
+                                        <span ng-bind-html="person.phone | highlight"></span>
+                                        <br>
+                                    </div>
+                                    <div class="s6 col"
+                                         ng-show="!!person.education || !!person.address || !!person.address">
+                                        <label ng-show="!!person.education">განათლება </label>
+                                        <span ng-bind-html="person.education | highlight"></span>
+                                        <br>
+                                        <label ng-show="!!person.address">მისამართი </label>
+                                        <span ng-bind-html="person.address | highlight"></span>
+                                        <br>
+                                        <label ng-show="!!person.confessor">მოძღვარი </label>
+                                        <span ng-bind-html="person.confessor | highlight"></span>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label ng-show="!!person.facebook">facebook </label><a
+                                        ng-href="{{person.facebook}}">{{person.facebook}}</a>
+                                    <br ng-show="!!person.facebook">
+                                    <label ng-show="!!person.textarea">დამატებითი ინფორმაცია </label>
+                                    <span ng-bind-html="person.textarea | highlight"></span>
+                                    <br ng-show="!!person.textarea">
+                                    <label>უნარები </label>
+                                    <span ng-bind-html="person.skills.join(', ') | highlight"></span>
+                                    <br>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,8 +139,11 @@
                 <i class="large material-icons">add</i>
             </a>
             <ul>
-                <li><a class="btn-floating tooltipped" data-position="left" data-delay="50" data-tooltip="პიროვნების დამატება" href="person.html"><i class="material-icons">perm_identity</i></a></li>
-                <li><a class="btn-floating tooltipped modal-trigger" href="#addSkillModal" data-position="left" data-delay="50" data-tooltip="უანრის დამატება"><i class="material-icons">toc</i></a></li>
+                <li><a class="btn-floating tooltipped" data-position="left" data-delay="50"
+                       data-tooltip="პიროვნების დამატება" href="person.html"><i class="material-icons">perm_identity</i></a>
+                </li>
+                <li><a class="btn-floating tooltipped modal-trigger" href="#addSkillModal" data-position="left"
+                       data-delay="50" data-tooltip="უანრის დამატება"><i class="material-icons">toc</i></a></li>
             </ul>
         </div>
     </div>

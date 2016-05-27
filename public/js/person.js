@@ -88,5 +88,4 @@ app.controller('controller', function ($scope, $http) {
     });
 
     document.getElementById('file').addEventListener('change', $scope.uploadFile, false);
-
 });

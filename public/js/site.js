@@ -1,4 +1,4 @@
-$(document).ready(function () {
+function ready() {
 
     $('.datepicker').pickadate({
         selectYears: 100,
@@ -24,10 +24,12 @@ $(document).ready(function () {
             dismissible: false
         });
     }, 500);
-});
+}
 
 var app = angular.module("site", []);
 app.controller('controller', function ($scope, $http) {
+    angular.element(document).ready(ready);
+
     $http.get("list").then(function (response) {
         $scope.persons = response.data;
         setTimeout(function () {
@@ -74,10 +76,20 @@ app.controller('controller', function ($scope, $http) {
     };
 
     $scope.search = function () {
-        $http.get('search?filter=' + $('#search').val()).then(function (response) {
+        var text = $('#search').val();
+        $http.get('search?filter=' + text).then(function (response) {
             $scope.persons = response.data;
         }, function (response) {
             Materialize.toast('მოხდა შეცდომა!', 4000)
-        })
+        });
+    };
+});
+
+app.filter('highlight', function ($sce) {
+    return function (text) {
+        var phrase = $('#search').val();
+        if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'),
+            '<span class="highlighted">$1</span>')
+        return $sce.trustAsHtml(text)
     }
 });
